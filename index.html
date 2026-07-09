@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onsite — Attendance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+
+<!-- Stylesheets are split by concern — see README "Folder Structure" -->
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/login.css">
+<link rel="stylesheet" href="css/shell.css">
+<link rel="stylesheet" href="css/employee.css">
+<link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/dm.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+
+
+<!-- ============================================================ -->
+<!-- LOGIN VIEW -->
+<!-- ============================================================ -->
+<section id="view-login" class="view active">
+  <div class="login-stripes" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="login-brand">
+    <div class="ambient-circle"></div>
+    <div class="brand-mark">
+      <svg class="onsite-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-dasharray="66 75.4" transform="rotate(-90 16 16)"/><circle cx="16" cy="4" r="3.2" fill="currentColor"/></svg>
+      <div class="brand-text"><span class="brand-primary">Adidas Egypt</span><span class="brand-secondary">Onsite</span></div>
+    </div>
+    <div class="login-copy">
+      <h1>Attendance, tracked the way the store actually runs.</h1>
+      <p>One tap to check in, one place to see who's on the floor — built for every store, every shift, every day.</p>
+    </div>
+    <div class="login-foot">
+      <span>You got this</span>
+      <span>Real-time status</span>
+      <span>Egypt Retail</span>
+    </div>
+  </div>
+
+  <div class="login-panel">
+    <form class="login-form" id="loginForm">
+      <h2>Sign in</h2>
+      <p class="sub">Use your Employee ID to access your dashboard.</p>
+
+      <div class="login-error" id="loginError">Employee ID not recognized. Try 1163 (staff) or 8000 (manager).</div>
+
+      <div class="field">
+        <label for="empId">Employee ID</label>
+        <input type="text" id="empId" placeholder="e.g. 1163" autocomplete="off" inputmode="numeric">
+      </div>
+      <div class="field">
+        <label for="empPass">Password</label>
+        <input type="password" id="empPass" placeholder="••••••••" autocomplete="off">
+      </div>
+
+      <button type="submit" class="btn-primary">Sign in</button>
+
+      <div class="divider">or</div>
+
+      <button type="button" class="btn-secondary" id="msBtn">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="7" height="7" fill="#F35325"/><rect x="9" width="7" height="7" fill="#81BC06"/><rect y="9" width="7" height="7" fill="#05A6F0"/><rect x="9" y="9" width="7" height="7" fill="#FFBA08"/></svg>
+        Continue with Microsoft
+      </button>
+
+      <div class="demo-hint">
+        <strong>Demo access —</strong> Staff: 1163 · Manager: 8000. Any password works in this prototype.
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- EMPLOYEE DASHBOARD -->
+<!-- ============================================================ -->
+<section id="view-employee" class="view">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <svg class="onsite-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-dasharray="66 75.4" transform="rotate(-90 16 16)"/><circle cx="16" cy="4" r="3.2" fill="currentColor"/></svg>
+        <div class="brand-text"><span class="brand-primary">Adidas Egypt</span><span class="brand-secondary">Onsite</span></div>
+      </div>
+      <nav class="nav-group">
+        <button class="nav-item active" data-emp-nav="home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+          <span>Dashboard</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="avatar" id="empAvatar">M</div>
+          <div class="who">
+            <strong id="empName">Mohamed A.</strong>
+            <span id="empStoreLabel">EG222 · San Stefano</span>
+          </div>
+        </div>
+        <button class="logout-btn" data-logout>Sign out</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <div class="welcome-greeting" id="empWelcomeGreeting">Good morning</div>
+          <h1 id="empGreeting">Mohamed Abdelaziz</h1>
+          <div class="welcome-role" id="empWelcomeRole">Sales Associate</div>
+          <div class="date-sub" id="empDateSub">Friday, July 3 · EG222 San Stefano</div>
+        </div>
+        <div class="clock-chip">
+          <div class="time" id="liveClock">--:--:--</div>
+          <div class="zone">Cairo (EET)</div>
+        </div>
+      </div>
+
+      <div class="today-value">
+        <span class="today-value-label">Today's value</span>
+        <span class="today-value-name" id="empTodaysValueName">Integrity</span>
+        <span class="today-value-body" id="empTodaysValueBody">Do the right thing, especially when no one's watching.</span>
+      </div>
+
+      <div class="loading-track" id="empLoadingBar" style="display:none; margin-bottom:18px;"></div>
+
+      <div class="checkin-card">
+        <div class="status-badge out" id="empStatusBadge">
+          <span class="dot"></span>
+          <span id="empStatusText">Not checked in</span>
+        </div>
+
+        <button class="checkin-btn" id="checkinBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="checkinIcon"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/></svg>
+          <span class="label" id="checkinLabel">Check In</span>
+          <span class="sub" id="checkinSub">Tap to start shift</span>
+        </button>
+
+        <div class="checkin-meta" id="checkinMeta">Shift starts 9:00 AM · Not yet checked in today</div>
+
+        <div class="location-note" id="locationNote">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span id="locationNoteText">We'll check your location when you check in.</span>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="k">Shift</div>
+          <div class="v" id="statTodayShift">9:00 AM – 6:00 PM</div>
+          <div class="v-sub" id="statTodayShiftLabel">Floor · San Stefano</div>
+        </div>
+        <div class="info-card">
+          <div class="k">This month</div>
+          <div class="v" id="statMonthDays">0 / 0 days</div>
+          <div class="v-sub" id="statMonthLate">0 late arrivals</div>
+        </div>
+        <div class="info-card">
+          <div class="k">Hours this week</div>
+          <div class="v" id="statWeekHours">0 hrs</div>
+          <div class="v-sub">Target: 40 hrs</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div class="title-group"><span class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span><h3>Recent attendance</h3></div>
+          <button class="link" id="requestLeaveBtn" style="background:none; border:none; cursor:pointer; font-family:inherit;">Request leave</button>
+        </div>
+        <div class="location-note checking" id="requestNote" style="margin:14px 22px 0 22px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
+          <span id="requestNoteText">Forgot to check out one day? Use "Fix" next to that row to request a correction.</span>
+        </div>
+        <table>
+          <thead>
+            <tr><th>Date</th><th>Check in</th><th>Check out</th><th>Status</th></tr>
+          </thead>
+          <tbody id="empHistoryBody">
+            <tr id="empHistoryEmpty"><td colspan="4" style="text-align:center; color:var(--gray-500); padding:26px;">No attendance recorded yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div class="title-group"><span class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span><h3>My requests</h3></div>
+        </div>
+        <table>
+          <thead>
+            <tr><th>Type</th><th>Date</th><th>Reason</th><th>Status</th></tr>
+          </thead>
+          <tbody id="empRequestsBody">
+            <tr><td colspan="4" style="text-align:center; color:var(--gray-500); padding:26px;">No requests submitted yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ADMIN DASHBOARD -->
+<!-- ============================================================ -->
+<section id="view-admin" class="view">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <svg class="onsite-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-dasharray="66 75.4" transform="rotate(-90 16 16)"/><circle cx="16" cy="4" r="3.2" fill="currentColor"/></svg>
+        <div class="brand-text"><span class="brand-primary">Adidas Egypt</span><span class="brand-secondary">Onsite</span></div>
+      </div>
+      <nav class="nav-group">
+        <div class="nav-group-label">Pages</div>
+        <button class="nav-item active" data-admin-nav="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-item" data-admin-nav="employees">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Employees</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="avatar">E</div>
+          <div class="who">
+            <strong>Ehab Hussein</strong>
+            <span>Store Manager · EG222</span>
+          </div>
+        </div>
+        <button class="logout-btn" data-logout>Sign out</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div id="adminSection-dashboard">
+      <div class="topbar">
+        <div>
+          <div class="welcome-greeting" id="adminWelcomeGreeting">Good morning</div>
+          <h1 id="adminGreeting">Ehab Hussein</h1>
+          <div class="welcome-role" id="adminWelcomeRole">Store Manager</div>
+          <div class="authority-badge">Store Operations</div>
+          <div class="date-sub" id="adminDateSub">Friday, July 3 · EG222 San Stefano</div>
+        </div>
+        <div class="clock-chip">
+          <div class="time" id="liveClockAdmin">--:--:--</div>
+          <div class="zone">Cairo (EET)</div>
+        </div>
+      </div>
+
+      <div class="today-value">
+        <span class="today-value-label">Today's value</span>
+        <span class="today-value-name" id="adminTodaysValueName">Integrity</span>
+        <span class="today-value-body" id="adminTodaysValueBody">Do the right thing, especially when no one's watching.</span>
+      </div>
+
+      <div class="loading-track" id="adminLoadingBar" style="display:none; margin-bottom:18px;"></div>
+
+      <div class="quick-actions">
+        <span class="quick-actions-label">Quick actions</span>
+        <button class="quick-action-btn" id="qaAddEmployee">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+          Add employee
+        </button>
+        <button class="quick-action-btn" id="qaDeclareClosure">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+          Declare closure
+        </button>
+        <button class="quick-action-btn" id="qaViewLate">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          View late today
+        </button>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card accent-present">
+          <div class="top">
+            <span class="label">Present</span>
+            <div class="kpi-icon present"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div>
+          </div>
+          <div class="value" id="kpiPresent">0</div>
+          <div class="delta" id="kpiPresentSub">of 0 staff on shift</div>
+        </div>
+        <div class="kpi-card accent-late">
+          <div class="top">
+            <span class="label">Late</span>
+            <div class="kpi-icon late"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          </div>
+          <div class="value" id="kpiLate">0</div>
+          <div class="delta" id="kpiLateSub">no late arrivals yet</div>
+        </div>
+        <div class="kpi-card accent-absent">
+          <div class="top">
+            <span class="label">Absent</span>
+            <div class="kpi-icon absent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><path d="m15 9-6 6M9 9l6 6"/></svg></div>
+          </div>
+          <div class="value" id="kpiAbsent">0</div>
+          <div class="delta">not yet checked in</div>
+        </div>
+        <div class="kpi-card accent-neutral">
+          <div class="top">
+            <span class="label">Missing check-out</span>
+            <div class="kpi-icon leave"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+          </div>
+          <div class="value" id="kpiMissing">0</div>
+          <div class="delta">from previous days</div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-bottom:24px;">
+        <div class="panel-head">
+          <div class="title-group"><span class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><h3>Team status</h3></div>
+          <span class="link" id="teamStatusCount">0 on the roster today</span>
+        </div>
+        <div class="team-status-grid" id="teamStatusGrid"></div>
+      </div>
+
+      <div class="panel" style="margin-bottom:24px;">
+        <div class="panel-head">
+          <div class="title-group"><span class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span><h3>Activity feed</h3></div>
+        </div>
+        <div id="adminActivityFeed"></div>
+      </div>
+
+      <div class="panel" style="margin-bottom:24px;">
+        <div class="panel-head">
+          <div class="title-group"><span class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></span><h3>Pending requests</h3></div>
+          <span class="link" id="pendingRequestsCount">0 pending</span>
+        </div>
+        <div class="location-note checking" id="adminRequestNote" style="margin:0 22px 14px 22px; display:none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
+          <span id="adminRequestNoteText"></span>
+        </div>
+        <table>
+          <thead>
+            <tr><th>Employee</th><th>Type</th><th>Date</th><th>Details</th><th>Reason</th><th>Submitted</th><th>Action</th></tr>
+          </thead>
+          <tbody id="pendingRequestsBody">
+            <tr><td colspan="7" style="text-align:center; color:var(--gray-500); padding:26px;">No pending requests.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="panel" style="margin-bottom:24px;">
+        <div class="panel-head">
+          <div class="title-group"><span class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M5 3 2 6M22 6l-3-3"/></svg></span><h3>Overtime to confirm</h3></div>
+          <span class="link" id="overtimeCount">0 to review</span>
+        </div>
+        <p style="margin:14px 22px 0 22px; font-size:12.5px; color:var(--gray-600);">A data-accuracy check, not a pay decision — confirming just means the recorded hours look right. Actual payroll stays outside this app.</p>
+        <table>
+          <thead>
+            <tr><th>Employee</th><th>Date</th><th>Overtime</th><th>Total worked</th><th>Action</th></tr>
+          </thead>
+          <tbody id="overtimeTableBody">
+            <tr><td colspan="5" style="text-align:center; color:var(--gray-500); padding:26px;">No overtime waiting on confirmation.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="panel" style="margin-bottom:24px;">
+        <div class="panel-head">
+          <div class="title-group"><span class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg></span><h3>Lateness patterns this month</h3></div>
+          <span class="link" id="latenessCount">0 flagged</span>
+        </div>
+        <p style="margin:14px 22px 0 22px; font-size:12.5px; color:var(--gray-600);">Informational only — no action is taken automatically.</p>
+        <table>
+          <thead>
+            <tr><th>Employee</th><th>Late arrivals this month</th><th>Dates</th></tr>
+          </thead>
+          <tbody id="latenessTableBody">
+            <tr><td colspan="3" style="text-align:center; color:var(--gray-500); padding:26px;">No repeated lateness this month.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="panel" style="margin-bottom:24px;">
+        <div class="panel-head">
+          <div class="title-group"><span class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span><h3>Store closures</h3></div>
+          <button class="btn-primary" id="addClosureBtn" style="width:auto; margin-top:0; padding:9px 16px; font-size:13px;">+ Declare closure</button>
+        </div>
+        <table>
+          <thead>
+            <tr><th>Date</th><th>Reason</th><th>Declared</th><th>Action</th></tr>
+          </thead>
+          <tbody id="closuresTableBody">
+            <tr><td colspan="4" style="text-align:center; color:var(--gray-500); padding:26px;">No closures recorded.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-card">
+          <h3>Weekly attendance</h3>
+          <div class="bar-chart">
+            <div class="bar-wrap"><div class="bar" style="height:78%"></div><span class="bar-label">Mon</span></div>
+            <div class="bar-wrap"><div class="bar" style="height:88%"></div><span class="bar-label">Tue</span></div>
+            <div class="bar-wrap"><div class="bar" style="height:70%"></div><span class="bar-label">Wed</span></div>
+            <div class="bar-wrap"><div class="bar" style="height:92%"></div><span class="bar-label">Thu</span></div>
+            <div class="bar-wrap"><div class="bar" style="height:78%"></div><span class="bar-label">Fri</span></div>
+            <div class="bar-wrap"><div class="bar" style="height:55%"></div><span class="bar-label">Sat</span></div>
+            <div class="bar-wrap"><div class="bar" style="height:40%"></div><span class="bar-label">Sun</span></div>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3>Today's split</h3>
+          <div class="donut-wrap">
+            <div class="donut">
+              <div class="donut-center"><div class="n">78%</div><div class="l">PRESENT</div></div>
+            </div>
+            <div class="legend">
+              <div class="legend-item"><span class="sw" style="background:var(--black)"></span>Present · 14</div>
+              <div class="legend-item"><span class="sw" style="background:var(--gray-300)"></span>Late · 2</div>
+              <div class="legend-item"><span class="sw" style="background:var(--gray-100)"></span>Absent/Leave · 2</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div class="title-group"><span class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg></span><h3>Today's attendance</h3></div>
+          <span class="link">Export</span>
+        </div>
+        <div class="filters-row">
+          <select class="select-chip" id="filterStore">
+            <option value="all">All stores</option>
+            <option value="EG222">EG222 · San Stefano</option>
+          </select>
+          <select class="select-chip" id="filterDate">
+            <option value="today">Today</option>
+            <option value="all">All history</option>
+          </select>
+          <select class="select-chip" id="filterEmployee">
+            <option value="all">All employees</option>
+          </select>
+          <select class="select-chip" id="filterStatus">
+            <option value="all">All statuses</option>
+            <option value="present">Present</option>
+            <option value="late">Late</option>
+            <option value="absent">Absent</option>
+            <option value="missing">Missing check-out</option>
+            <option value="leave">Day off</option>
+            <option value="on_leave">On leave</option>
+          </select>
+        </div>
+        <table>
+          <thead>
+            <tr><th>Employee</th><th>Store</th><th>Shift</th><th>Date</th><th>Check in</th><th>Check out</th><th>Status</th></tr>
+          </thead>
+          <tbody id="adminTableBody">
+            <tr><td colspan="7" style="text-align:center; color:var(--gray-500); padding:26px;">No attendance records yet — check in as an employee to see data here.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+      <!-- /adminSection-dashboard -->
+
+      <div id="adminSection-employees" style="display:none;">
+        <div class="topbar">
+          <div>
+            <div class="breadcrumb">Dashboard <span>/</span> Employees</div>
+            <h1>Employees</h1>
+            <div class="date-sub">The full roster — search, filter, and open any employee's profile</div>
+          </div>
+          <button class="btn-primary" id="addEmployeeBtn" style="width:auto; margin-top:0; padding:11px 18px;">+ Add employee</button>
+        </div>
+
+        <div class="panel">
+          <div class="location-note checking" id="employeesNote" style="margin:18px 22px 0 22px; display:none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
+            <span id="employeesNoteText"></span>
+          </div>
+
+          <div class="directory-controls">
+            <input type="text" class="search-input" id="dirSearchInput" placeholder="Search by ID or name…" style="flex:1; min-width:180px;">
+            <select class="select-chip" id="dirFilterStore">
+              <option value="all">All stores</option>
+            </select>
+            <select class="select-chip" id="dirFilterRole">
+              <option value="all">All roles</option>
+            </select>
+            <select class="select-chip" id="dirFilterStatus">
+              <option value="all">All statuses</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+            <select class="select-chip" id="dirSortBy">
+              <option value="name">Sort: Name (A–Z)</option>
+              <option value="store">Sort: Store</option>
+            </select>
+          </div>
+
+          <table>
+            <thead>
+              <tr><th>Name</th><th>ID</th><th>Store</th><th>Role</th><th>Status</th><th>Action</th></tr>
+            </thead>
+            <tbody id="employeesTableBody">
+              <tr><td colspan="6" style="text-align:center; color:var(--gray-500); padding:26px;">No employees yet.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- /adminSection-employees -->
+
+      <div class="profile-overlay" id="employeeProfileOverlay">
+        <div class="profile-panel" id="employeeProfilePanel">
+          <button class="profile-close" id="employeeProfileClose" aria-label="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+          <div id="employeeProfileContent"></div>
+        </div>
+      </div>
+
+      <div id="adminSection-directory" style="display:none;">
+        <div class="topbar">
+          <div>
+            <div class="breadcrumb">Dashboard <span>/</span> Directory</div>
+            <h1>Employee Directory</h1>
+            <div class="date-sub">Search and browse everyone on the roster — read-only for now.</div>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-bottom:24px;">
+          <div class="filters-row" style="padding:20px 22px 0 22px;">
+            <input type="text" class="search-input" id="directorySearch" placeholder="Search by ID or name…">
+            <select class="select-chip" id="directoryStoreFilter">
+              <option value="all">All stores</option>
+            </select>
+            <select class="select-chip" id="directoryRoleFilter">
+              <option value="all">All roles</option>
+              <option value="Sales Associate">Sales Associate</option>
+            </select>
+            <select class="select-chip" id="directoryStatusFilter">
+              <option value="all">All statuses</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+            <select class="select-chip" id="directorySort">
+              <option value="name">Sort: Name (A–Z)</option>
+              <option value="store">Sort: Store</option>
+            </select>
+          </div>
+          <table>
+            <thead>
+              <tr><th>Employee ID</th><th>Name</th><th>Store</th><th>Role</th><th>Status</th><th>Joined</th></tr>
+            </thead>
+            <tbody id="directoryTableBody">
+              <tr><td colspan="6" style="text-align:center; color:var(--gray-500); padding:26px;">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- /adminSection-directory -->
+    </main>
+
+    <div class="profile-overlay" id="profileOverlay">
+      <div class="profile-panel" id="profilePanel">
+        <button class="profile-close" id="profileCloseBtn" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+        <div id="profilePanelContent"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="view-dm" class="view">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <svg class="onsite-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-dasharray="66 75.4" transform="rotate(-90 16 16)"/><circle cx="16" cy="4" r="3.2" fill="currentColor"/></svg>
+        <div class="brand-text"><span class="brand-primary">Adidas Egypt</span><span class="brand-secondary">Onsite</span></div>
+      </div>
+      <nav class="nav-group">
+        <button class="nav-item active" data-dm-nav="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          <span>Dashboard</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="avatar" id="dmAvatar">A</div>
+          <div class="who">
+            <strong id="dmName">Amr Fathallah</strong>
+            <span>District Manager</span>
+          </div>
+        </div>
+        <button class="logout-btn" data-logout>Sign out</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="exec-brief">
+        <span class="exec-brief-pulse"></span>
+        <span class="exec-brief-text" id="execBriefText">Loading district overview…</span>
+        <span class="exec-brief-time" id="execBriefDate"></span>
+      </div>
+
+      <div class="topbar exec-topbar">
+        <span class="exec-watermark" id="execWatermark"></span>
+        <div>
+          <div class="welcome-greeting" id="dmWelcomeGreeting">Good morning</div>
+          <h1 id="dmGreeting">Amr Fathallah</h1>
+          <div class="welcome-role" id="dmWelcomeRole">District Manager</div>
+          <div class="authority-badge">Executive Dashboard</div>
+          <div class="date-sub" id="dmDateSub">Friday, July 3 · All Stores</div>
+        </div>
+        <div class="clock-and-actions">
+          <div class="clock-chip">
+            <div class="time" id="liveClockDM">--:--:--</div>
+            <div class="zone">Cairo (EET)</div>
+          </div>
+          <button class="btn-export-hero btn-hero-outline" id="dmRequestsBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            Requests<span id="dmPendingBadge" class="dm-pending-badge" style="display:none;">0</span>
+          </button>
+          <button class="btn-export-hero btn-hero-outline" id="dmManageBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Manage
+          </button>
+          <button class="btn-export-hero btn-hero-outline" id="dmAddEmployeeBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+            Add employee
+          </button>
+          <button class="btn-export-hero" id="dmExportBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg>
+            Export Report
+          </button>
+        </div>
+      </div>
+
+      <div class="today-value">
+        <span class="today-value-label">Today's value</span>
+        <span class="today-value-name" id="dmTodaysValueName">Integrity</span>
+        <span class="today-value-body" id="dmTodaysValueBody">Do the right thing, especially when no one's watching.</span>
+      </div>
+
+      <div class="loading-track" id="dmLoadingBar" style="display:none; margin-bottom:18px;"></div>
+
+      <div class="kpi-grid dm-kpi-grid">
+        <div class="kpi-card">
+          <div class="top"><span class="label">Total Employees</span></div>
+          <div class="value" id="dmTotalEmployees">0</div>
+        </div>
+        <div class="kpi-card">
+          <div class="top"><span class="label">Present Today</span></div>
+          <div class="value" id="dmPresent">0</div>
+        </div>
+        <div class="kpi-card">
+          <div class="top"><span class="label">Late Today</span></div>
+          <div class="value" id="dmLate">0</div>
+        </div>
+        <div class="kpi-card">
+          <div class="top"><span class="label">Absent Today</span></div>
+          <div class="value" id="dmAbsent">0</div>
+        </div>
+        <div class="kpi-card">
+          <div class="top"><span class="label">Off Today</span></div>
+          <div class="value" id="dmOff">0</div>
+        </div>
+        <div class="kpi-card">
+          <div class="top"><span class="label">On Leave Today</span></div>
+          <div class="value" id="dmOnLeave">0</div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-bottom:24px;">
+        <div class="panel-head">
+          <div class="title-group"><span class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg></span><h3>Operational insights</h3></div>
+        </div>
+        <ul class="insights-list" id="dmInsightsList"></ul>
+      </div>
+
+      <div class="performance-toggle">
+        <span class="performance-toggle-label">Performance view</span>
+        <button class="period-btn active" data-period="daily">Daily</button>
+        <button class="period-btn" data-period="weekly">Weekly</button>
+        <button class="period-btn" data-period="monthly">Monthly</button>
+      </div>
+
+      <div class="chart-panel-row">
+        <div class="chart-panel">
+          <div class="chart-panel-head"><h3 id="dmChartAttendanceTitle">Attendance trend (last 30 days)</h3><span class="chart-type-tag">Line</span></div>
+          <div class="chart-wrap"><canvas id="dmChartAttendance"></canvas></div>
+        </div>
+        <div class="chart-panel">
+          <div class="chart-panel-head"><h3 id="dmChartLateTitle">Late trend (last 30 days)</h3><span class="chart-type-tag">Bar</span></div>
+          <div class="chart-wrap"><canvas id="dmChartLate"></canvas></div>
+        </div>
+        <div class="chart-panel">
+          <div class="chart-panel-head"><h3 id="dmChartPercentageTitle">Daily attendance %</h3><span class="chart-type-tag">Line</span></div>
+          <div class="chart-wrap"><canvas id="dmChartPercentage"></canvas></div>
+        </div>
+      </div>
+
+      <div class="chart-panel" style="margin-bottom:24px;">
+        <div class="chart-panel-head"><h3 id="dmChartOvertimeTitle">Overtime trend (last 30 days)</h3><span class="chart-type-tag">Bar</span></div>
+        <div class="chart-wrap"><canvas id="dmChartOvertime"></canvas></div>
+      </div>
+
+      <div class="panel" style="margin-bottom:24px;">
+        <div class="panel-head">
+          <div class="title-group"><span class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg></span><h3>Store comparison</h3></div>
+        </div>
+        <div class="stores-grid" id="dmStoresGrid"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div class="title-group"><span class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/><circle cx="8" cy="15" r="1.2" fill="currentColor" stroke="none"/></svg></span><h3>Live employee attendance</h3></div>
+        </div>
+        <div class="filters-row">
+          <select class="select-chip" id="dmFilterDate"></select>
+          <select class="select-chip" id="dmFilterStore">
+            <option value="all">All stores</option>
+          </select>
+          <select class="select-chip" id="dmFilterEmployee">
+            <option value="all">All employees</option>
+          </select>
+          <select class="select-chip" id="dmFilterShift">
+            <option value="all">All shifts</option>
+          </select>
+          <input type="text" class="search-input" id="dmSearchInput" placeholder="Search by ID or name…">
+        </div>
+        <table>
+          <thead>
+            <tr><th>Employee ID</th><th>Employee Name</th><th>Store</th><th>Shift</th><th>Status</th><th>Check In</th><th>Check Out</th><th>Working Hours</th></tr>
+          </thead>
+          <tbody id="dmTableBody">
+            <tr><td colspan="8" style="text-align:center; color:var(--gray-500); padding:26px;">No attendance records match these filters.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</section>
+
+<!-- Chart.js + SheetJS — used only by the District Manager dashboard (js/pages/dmPage.js) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<!-- Entry point — ES module, wires routing + all pages. See /js/main.js -->
+<script type="module" src="js/main.js"></script>
+
+</body>
+</html>
