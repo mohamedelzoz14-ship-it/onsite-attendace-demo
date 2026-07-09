@@ -1,0 +1,337 @@
+/* ============================================================
+ * shell.css — App shell: sidebar, topbar, live clock chip
+ * Shared by the Employee and Admin dashboards
+ * ============================================================ */
+
+  /* ============ APP SHELL (Employee + Admin) ============ */
+  .app-shell{display:flex; min-height:100vh;}
+  /* Dark shell for the premium dashboards so no light gap ever shows. */
+  #view-dm .app-shell, #view-employee .app-shell{background:#17181c;}
+
+  .sidebar{
+    width:232px;
+    flex-shrink:0;
+    background:linear-gradient(180deg, var(--black) 0%, var(--near-black) 100%);
+    color:var(--white);
+    display:flex;
+    flex-direction:column;
+    padding:22px 14px;
+    position:sticky;
+    top:0;
+    height:100vh;
+  }
+
+  .sidebar-brand{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:6px 10px 26px 10px;
+  }
+  .sidebar-brand .brand-text{display:flex; flex-direction:column; gap:1px;}
+  .sidebar-brand .brand-primary{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:14.5px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+  }
+  .sidebar-brand .brand-secondary{
+    font-size:9.5px;
+    font-weight:600;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:var(--lime);
+  }
+  .sidebar-brand .onsite-mark{width:20px; height:20px; color:var(--lime);}
+
+  .nav-group{display:flex; flex-direction:column; gap:2px; margin-bottom:4px;}
+  .nav-group-label{
+    font-family:var(--font-display);
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:rgba(255,255,255,0.35);
+    padding:0 12px 8px 12px;
+  }
+  .nav-item{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:10px 12px;
+    border-radius:var(--radius-sm);
+    color:var(--gray-300);
+    font-size:13.5px;
+    font-weight:500;
+    position:relative;
+    transition:background 0.15s var(--ease), color 0.15s var(--ease);
+  }
+  .nav-item svg{width:17px; height:17px; flex-shrink:0; opacity:0.85;}
+  .nav-item:hover{background:rgba(255,255,255,0.06); color:var(--white);}
+  .nav-item.active{background:var(--white); color:var(--black);}
+  .nav-item.active svg{opacity:1;}
+  /* Premium accent: a lime edge marking the active nav item. */
+  .nav-item.active::before{
+    content:"";
+    position:absolute;
+    left:0; top:50%;
+    transform:translateY(-50%);
+    width:3px; height:60%;
+    border-radius:0 3px 3px 0;
+    background:var(--lime);
+  }
+  .nav-item.active::before{
+    content:'';
+    position:absolute;
+    left:-14px; top:50%;
+    transform:translateY(-50%);
+    width:3px; height:18px;
+    background:var(--white);
+    border-radius:0 2px 2px 0;
+  }
+
+  .sidebar-footer{
+    margin-top:auto;
+    padding-top:16px;
+    border-top:1px solid rgba(255,255,255,0.1);
+  }
+  .sidebar-user{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 10px;
+    border-radius:var(--radius-sm);
+  }
+  .avatar{
+    position:relative;
+    width:32px; height:32px;
+    border-radius:50%;
+    background:var(--gray-800);
+    display:flex; align-items:center; justify-content:center;
+    font-size:12px; font-weight:700;
+    flex-shrink:0;
+  }
+  .sidebar-user .avatar::after{
+    content:'';
+    position:absolute;
+    right:-1px; bottom:-1px;
+    width:9px; height:9px;
+    border-radius:50%;
+    background:var(--green);
+    border:2px solid var(--black);
+  }
+  .sidebar-user .who{display:flex; flex-direction:column; min-width:0;}
+  .sidebar-user .who strong{font-size:13px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .sidebar-user .who span{font-size:11.5px; color:var(--gray-500);}
+  .logout-btn{
+    margin-top:8px;
+    width:100%;
+    text-align:left;
+    padding:9px 10px;
+    font-size:12.5px;
+    color:var(--gray-500);
+    border-radius:var(--radius-sm);
+    transition:background 0.15s var(--ease), color 0.15s var(--ease);
+  }
+  .logout-btn:hover{background:rgba(255,255,255,0.06); color:var(--white);}
+
+  .main{flex:1; padding:32px 40px; max-width:1180px;}
+
+  /* AURORA backdrop behind the EMPLOYEE dashboard — same northern-lights
+     effect as the DM dashboard. Content blocks stay light and float above. */
+  #view-employee .main{
+    max-width:none;
+    min-height:100vh;
+    background:linear-gradient(135deg, #14151a 0%, #1b1c22 50%, #101116 100%);
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  #view-employee .main::before{
+    content:"";
+    position:absolute;
+    inset:-40%;
+    z-index:0;
+    background:
+      radial-gradient(closest-side at 30% 30%, rgba(212,255,0,0.22), transparent 70%),
+      radial-gradient(closest-side at 70% 40%, rgba(139,92,246,0.22), transparent 70%),
+      radial-gradient(closest-side at 50% 75%, rgba(46,229,157,0.18), transparent 70%),
+      radial-gradient(closest-side at 80% 80%, rgba(168,85,247,0.16), transparent 70%);
+    background-repeat:no-repeat;
+    filter:blur(30px);
+    animation:aurora 14s ease-in-out infinite;
+    pointer-events:none;
+  }
+  #view-employee .main > *{position:relative; z-index:1; width:100%; max-width:1100px;}
+  @media (prefers-reduced-motion: reduce){
+    #view-employee .main::before{animation:none;}
+  }
+
+  /* Shared aurora keyframes (also in dm.css; duplicated so the employee
+     view is self-sufficient regardless of stylesheet load order). */
+  @keyframes aurora{
+    0%{transform:translate(0%, 0%) rotate(0deg) scale(1.1);}
+    25%{transform:translate(6%, -4%) rotate(4deg) scale(1.25);}
+    50%{transform:translate(-4%, 5%) rotate(-3deg) scale(1.15);}
+    75%{transform:translate(3%, 3%) rotate(3deg) scale(1.3);}
+    100%{transform:translate(0%, 0%) rotate(0deg) scale(1.1);}
+  }
+
+  /* Employee topbar becomes a light floating panel so its dark text stays
+     readable over the dark field. */
+  #view-employee .topbar{
+    background:var(--white);
+    border-radius:var(--radius-lg);
+    padding:22px 24px;
+    box-shadow:var(--shadow-lg);
+    margin-bottom:20px;
+    border-bottom:none;
+  }
+
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:32px;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+  .topbar h1{font-family:var(--font-display); font-size:28px; font-weight:700; letter-spacing:-0.005em; margin-top:2px;}
+  .topbar .date-sub{color:var(--gray-600); font-size:13.5px; margin-top:4px;}
+
+  /* ---- 3-line welcome: greeting / full name / role ---- */
+  .welcome-greeting{font-size:13.5px; color:var(--gray-600);}
+  .welcome-role{
+    font-family:var(--font-display);
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--steel);
+    margin-top:1px;
+  }
+
+  /* ---- Breadcrumb — used where a dashboard has more than one section
+     (currently just admin's Dashboard/Employees toggle). ---- */
+  .breadcrumb{font-size:12px; color:var(--gray-500); margin-bottom:3px;}
+  .breadcrumb span{margin:0 5px; color:var(--gray-300);}
+
+  /* ---- Authority badge — a quiet cue of "what kind of dashboard is this",
+     Store Manager vs District Manager only (Employee stays minimal, no badge,
+     per the brief's own "simple, focused" direction for that role). ---- */
+  .authority-badge{
+    display:inline-block;
+    margin-top:8px;
+    padding:4px 11px;
+    border:1px solid var(--gray-300);
+    border-radius:100px;
+    font-size:11px;
+    font-weight:600;
+    color:var(--gray-600);
+    letter-spacing:0.02em;
+  }
+
+  /* ---- Today's Value — a small, quiet strip, not a big card ---- */
+  /* ---- Today's Value — a small, elegant card (not a big banner). Uses
+     the SAME dark surface already established elsewhere (login hero,
+     sidebar) for this one daily highlight moment, rather than inventing
+     a new accent treatment. ---- */
+  .today-value{
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+    padding:20px 22px;
+    margin-bottom:18px;
+    background:var(--black);
+    border-radius:var(--radius-md);
+    animation:valueReveal 0.6s var(--ease) both;
+  }
+  .today-value::before{
+    content:'';
+    position:absolute;
+    right:-50px;
+    top:-60px;
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,0.07);
+    animation:valueDriftA 26s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes valueReveal{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  @keyframes valueDriftA{
+    0%, 100%{transform:translate(0,0) scale(1);}
+    50%{transform:translate(-8px,6px) scale(1.04);}
+  }
+  .today-value-label{
+    position:relative; z-index:1;
+    font-family:var(--font-display);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.09em;
+    text-transform:uppercase;
+    color:var(--gray-500);
+  }
+  .today-value-name{
+    position:relative; z-index:1;
+    font-family:var(--font-display);
+    font-size:23px;
+    font-weight:700;
+    color:var(--white);
+    letter-spacing:0.01em;
+  }
+  .today-value-body{position:relative; z-index:1; font-size:13px; color:var(--gray-300); margin-top:2px;}
+
+  /* ---- Quick actions — new entry points to EXISTING capabilities
+     (add employee, declare closure are already real buttons elsewhere;
+     this just surfaces them together, prominently, near the top). ---- */
+  .quick-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:18px;
+  }
+  .quick-actions-label{
+    font-family:var(--font-display);
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:0.07em;
+    text-transform:uppercase;
+    color:var(--steel);
+    margin-right:4px;
+  }
+  .quick-action-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:9px 14px;
+    background:var(--white);
+    border:1px solid var(--gray-200);
+    border-radius:var(--radius-sm);
+    font-size:13px;
+    font-weight:600;
+    color:var(--gray-800);
+    transition:border-color 0.15s var(--ease), background 0.15s var(--ease);
+  }
+  .quick-action-btn:hover{border-color:var(--gray-500); background:var(--gray-50);}
+  .quick-action-btn svg{width:15px; height:15px; flex-shrink:0; color:var(--gray-600);}
+
+  .clock-chip{
+    background:var(--white);
+    border:1px solid var(--gray-200);
+    border-radius:var(--radius-md);
+    padding:12px 18px;
+    text-align:right;
+    box-shadow:var(--shadow-sm);
+  }
+  .clock-chip .time{font-size:20px; font-weight:700; letter-spacing:-0.01em; font-variant-numeric:tabular-nums;}
+  .clock-chip .zone{font-size:11.5px; color:var(--gray-500); margin-top:2px;}
+

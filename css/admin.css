@@ -1,0 +1,256 @@
+/* ============================================================
+ * admin.css — Admin dashboard: KPI cards, charts, filters
+ * ============================================================ */
+
+  /* ============ ADMIN DASHBOARD ============ */
+  .kpi-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:16px;
+    margin-bottom:24px;
+  }
+  .kpi-card{
+    position:relative;
+    background:var(--white);
+    border:1px solid var(--gray-200);
+    border-radius:var(--radius-md);
+    padding:20px 22px;
+    box-shadow:var(--shadow-sm);
+    transition:transform 0.18s var(--ease), box-shadow 0.18s var(--ease), border-color 0.18s var(--ease);
+    overflow:hidden;
+  }
+  .kpi-card:hover{transform:translateY(-2px); box-shadow:var(--shadow-md); border-color:var(--gray-300);}
+  .kpi-card::before{
+    content:'';
+    position:absolute;
+    top:0; left:0; right:0;
+    height:3px;
+    background:var(--gray-300);
+  }
+  .kpi-card.accent-present::before{background:var(--green);}
+  .kpi-card.accent-late::before{background:var(--amber);}
+  .kpi-card.accent-absent::before{background:var(--red);}
+  .kpi-card.accent-neutral::before{background:var(--gray-400);}
+  .kpi-card .top{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px;}
+  .kpi-card .label{font-family:var(--font-display); font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--steel);}
+  .kpi-icon{
+    width:30px; height:30px;
+    border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .kpi-icon svg{width:15px; height:15px;}
+  .kpi-icon.present{background:var(--green-bg); color:var(--green);}
+  .kpi-icon.late{background:var(--amber-bg); color:var(--amber);}
+  .kpi-icon.absent{background:var(--red-bg); color:var(--red);}
+  .kpi-icon.leave{background:var(--gray-100); color:var(--gray-600);}
+  .kpi-card .value{font-family:var(--font-display); font-size:32px; font-weight:700; letter-spacing:-0.01em; font-variant-numeric:tabular-nums;}
+  .kpi-card .delta{font-size:12px; color:var(--gray-500); margin-top:4px;}
+
+  .filters-row{
+    display:flex;
+    gap:10px;
+    padding:16px 22px;
+    border-bottom:1px solid var(--gray-200);
+    flex-wrap:wrap;
+  }
+  .select-chip{
+    padding:8px 12px;
+    border:1px solid var(--gray-200);
+    border-radius:var(--radius-sm);
+    font-size:13px;
+    color:var(--gray-800);
+    background:var(--gray-50);
+  }
+  .select-chip:focus{outline:none; border-color:var(--black);}
+
+  .chart-row{
+    display:grid;
+    grid-template-columns:1.4fr 1fr;
+    gap:16px;
+    margin-bottom:24px;
+  }
+  .chart-card{
+    background:var(--white);
+    border:1px solid var(--gray-200);
+    border-radius:var(--radius-md);
+    padding:20px 22px;
+    box-shadow:var(--shadow-sm);
+  }
+  .chart-card h3{font-size:14px; font-weight:700; margin-bottom:18px;}
+
+  .bar-chart{display:flex; align-items:flex-end; gap:12px; height:140px; padding-top:10px;}
+  .bar-chart .bar-wrap{flex:1; display:flex; flex-direction:column; align-items:center; gap:8px; height:100%; justify-content:flex-end;}
+  .bar-chart .bar{width:100%; max-width:30px; border-radius:5px 5px 0 0; background:var(--black); transition:transform 0.2s var(--ease);}
+  .bar-chart .bar:hover{transform:scaleY(1.03);}
+  .bar-chart .bar-label{font-size:11px; color:var(--gray-500); font-weight:600;}
+
+  .donut-wrap{display:flex; align-items:center; gap:20px;}
+  .donut{
+    width:120px; height:120px;
+    border-radius:50%;
+    background:conic-gradient(var(--black) 0% 78%, var(--gray-300) 78% 90%, var(--gray-100) 90% 100%);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+    position:relative;
+  }
+  .donut::after{
+    content:"";
+    width:76px; height:76px;
+    border-radius:50%;
+    background:var(--white);
+    position:absolute;
+  }
+  .donut-center{position:relative; z-index:1; text-align:center;}
+  .donut-center .n{font-size:18px; font-weight:800;}
+  .donut-center .l{font-size:9.5px; color:var(--gray-500); font-weight:600;}
+  .legend{display:flex; flex-direction:column; gap:10px;}
+  .legend-item{display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--gray-800);}
+  .legend-item .sw{width:9px; height:9px; border-radius:2px; flex-shrink:0;}
+
+  .store-cell{display:flex; align-items:center; gap:9px;}
+  .store-dot{width:7px; height:7px; border-radius:50%; background:var(--gray-800); flex-shrink:0;}
+
+  .btn-mini{
+    padding:5px 12px;
+    border-radius:100px;
+    font-size:11.5px;
+    font-weight:600;
+    cursor:pointer;
+    border:1px solid var(--gray-200);
+    margin-right:6px;
+    transition:background 0.15s var(--ease), border-color 0.15s var(--ease);
+  }
+  .btn-mini.approve{background:var(--black); color:var(--white); border-color:var(--black);}
+  .btn-mini.approve:hover{background:var(--near-black);}
+  .btn-mini.reject{background:var(--white); color:var(--gray-800);}
+  .btn-mini.reject:hover{background:var(--gray-50); border-color:var(--gray-500);}
+
+  .reason-cell{max-width:220px; white-space:normal; color:var(--gray-600); font-size:12.5px;}
+
+  /* ---- Team status — a quick visual scan of everyone's current state,
+     using the SAME data already fetched for the detailed table below;
+     this is a second, faster-to-scan view of it, not a new data source. ---- */
+  .team-status-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    padding:18px 22px 22px 22px;
+  }
+  .team-status-chip{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:8px 12px 8px 8px;
+    border:1px solid var(--gray-200);
+    border-radius:100px;
+  }
+  .team-status-chip .avatar{
+    width:28px; height:28px;
+    border-radius:50%;
+    background:var(--gray-100);
+    color:var(--gray-800);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display);
+    font-size:12px;
+    font-weight:700;
+    flex-shrink:0;
+  }
+  .team-status-chip .name{font-size:13px; font-weight:600; color:var(--gray-800); white-space:nowrap;}
+  .team-status-chip .status-dot{width:8px; height:8px; border-radius:50%; flex-shrink:0;}
+  .team-status-chip .status-dot.present{background:var(--green);}
+  .team-status-chip .status-dot.late{background:var(--amber);}
+  .team-status-chip .status-dot.absent{background:var(--red);}
+  .team-status-chip .status-dot.leave{background:var(--gray-400);}
+
+  /* ---- Employee Directory: search/filter/sort controls ---- */
+  .directory-controls{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    padding:18px 22px;
+    border-bottom:1px solid var(--gray-100);
+  }
+
+  /* Rows are clickable to open the profile panel (see JS) — a subtle hover
+     cue so that's discoverable, without disturbing the existing action buttons. */
+  #employeesTableBody tr{cursor:pointer;}
+  #employeesTableBody td:last-child{cursor:default;} /* the action-buttons cell itself stays a normal cursor */
+
+  /* ---- Employee profile — a slide-over panel, not a centered modal, so
+     looking someone up doesn't feel like leaving the directory. ---- */
+  .profile-overlay{
+    position:fixed; inset:0;
+    background:rgba(10,10,10,0);
+    pointer-events:none;
+    z-index:1050;
+    transition:background 0.25s var(--ease);
+  }
+  .profile-overlay.open{background:rgba(10,10,10,0.45); pointer-events:auto;}
+  .profile-panel{
+    position:absolute;
+    top:0; right:0;
+    width:420px;
+    max-width:92vw;
+    height:100%;
+    background:var(--white);
+    box-shadow:var(--shadow-lg);
+    transform:translateX(100%);
+    transition:transform 0.25s var(--ease);
+    overflow-y:auto;
+    padding:28px 26px;
+  }
+  .profile-overlay.open .profile-panel{transform:translateX(0);}
+  .profile-close{
+    position:absolute;
+    top:20px; right:20px;
+    width:32px; height:32px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--gray-600);
+    transition:background 0.15s var(--ease);
+  }
+  .profile-close:hover{background:var(--gray-100);}
+  .profile-close svg{width:16px; height:16px;}
+
+  .profile-header{display:flex; flex-direction:column; align-items:center; text-align:center; padding:12px 0 22px 0; border-bottom:1px solid var(--gray-100); margin-bottom:20px;}
+  .profile-avatar{
+    width:56px; height:56px;
+    border-radius:50%;
+    background:var(--black);
+    color:var(--white);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display);
+    font-size:20px;
+    font-weight:700;
+    margin-bottom:12px;
+  }
+  .profile-name{font-family:var(--font-display); font-size:21px; font-weight:700;}
+  .profile-role{font-size:13px; color:var(--gray-600); margin-top:2px;}
+
+  .profile-section{margin-bottom:22px;}
+  .profile-section-title{
+    font-family:var(--font-display);
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:0.07em;
+    text-transform:uppercase;
+    color:var(--steel);
+    margin-bottom:10px;
+  }
+  .profile-field-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .profile-field .k{font-size:11px; color:var(--gray-500); margin-bottom:3px;}
+  .profile-field .v{font-size:13.5px; font-weight:600; color:var(--gray-800);}
+
+  .profile-schedule-row{display:flex; justify-content:space-between; padding:7px 0; border-bottom:1px solid var(--gray-100); font-size:13px;}
+  .profile-schedule-row:last-child{border-bottom:none;}
+  .profile-schedule-row .day{color:var(--gray-600);}
+  .profile-schedule-row .shift{font-weight:600; color:var(--gray-800);}
+  .profile-schedule-row .shift.off{color:var(--gray-400); font-weight:500;}
+
+  .profile-stat-row{display:flex; gap:16px; margin-bottom:6px;}
+  .profile-stat{flex:1; padding:12px; background:var(--track); border-radius:var(--radius-sm); text-align:center;}
+  .profile-stat .figure{font-family:var(--font-display); font-size:20px; font-weight:700; font-variant-numeric:tabular-nums;}
+  .profile-stat .label{font-size:10.5px; color:var(--gray-600); text-transform:uppercase; letter-spacing:0.04em; margin-top:2px;}
+
+  .profile-mini-row{display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--gray-100); font-size:12.5px;}
+  .profile-mini-row:last-child{border-bottom:none;}

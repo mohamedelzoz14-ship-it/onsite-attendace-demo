@@ -1,0 +1,48 @@
+/* ============================================================
+ * responsive.css — Breakpoints for mobile/tablet
+ * ============================================================ */
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 900px){
+    #view-login.active{flex-direction:column;}
+    .login-brand{padding:32px 24px; min-height:220px;}
+    .login-copy h1{font-size:26px;}
+    .login-panel{width:100%; padding:32px 24px;}
+
+    .app-shell{flex-direction:column;}
+    .sidebar{
+      width:100%; height:auto; position:sticky; top:0; z-index:20;
+      flex-direction:row; align-items:center; padding:12px 16px; overflow-x:auto;
+    }
+    .sidebar-brand{padding:0 14px 0 0; margin-right:6px;}
+    .nav-group{flex-direction:row;}
+    .nav-item span{display:none;}
+    .nav-item{padding:9px;}
+    .sidebar-footer{display:none;}
+    .main{padding:22px 18px;}
+    .info-grid{grid-template-columns:1fr;}
+    .kpi-grid{grid-template-columns:repeat(2,1fr);}
+    .chart-row{grid-template-columns:1fr;}
+    table{font-size:12.5px;}
+    th, td{padding:11px 14px;}
+    .topbar{align-items:stretch;}
+  }
+
+  /* ============ MOBILE (phone-width specifically, not just "smaller tablet") ============
+     Onsite is used primarily on a phone during a real shift — these rules tune the
+     Phase 2 additions (the shift-clock signature element, empty states, dashboard
+     grids) for that screen size specifically, on top of the tablet rules above. */
+  @media (max-width: 560px){
+    .shift-clock{gap:5px;}
+    .shift-clock-figure{font-size:21px;}
+    .empty-state{padding:32px 16px;}
+    .empty-state .empty-glyph{width:34px; height:34px;}
+    .kpi-grid{grid-template-columns:1fr 1fr;}
+    .dm-kpi-grid{grid-template-columns:1fr 1fr !important;}
+    .stores-grid{grid-template-columns:1fr;}
+    .checkin-btn{width:156px; height:156px;}
+    h1{font-size:22px;}
+    .profile-panel{width:100%; max-width:100vw; padding:24px 18px;}
+    .profile-schedule{grid-template-columns:repeat(4, 1fr); gap:6px;}
+    .profile-fields{grid-template-columns:1fr;}
+  }
